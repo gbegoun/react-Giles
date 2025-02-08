@@ -1,9 +1,8 @@
 const { useEffect, useState , } = React
-const { Link,useNavigate, useLocation, Outlet,useParams } = ReactRouterDOM
+const { useNavigate, useLocation, Outlet, useParams } = ReactRouterDOM
 
 import { BookFilter }   from '../cmps/BookFilter.jsx'
 import { BookList }     from '../cmps/BookList.jsx'
-import { BookDetails }  from "../cmps/BookDetails.jsx";
 import { bookService }  from "../services/book.service.js"
 
 export function BookIndex() {

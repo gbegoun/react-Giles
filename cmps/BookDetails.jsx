@@ -1,6 +1,8 @@
 const {useNavigate, useLocation, useParams } = ReactRouterDOM
 const { useEffect, useState } = React
+
 import { bookService } from '../services/book.service.js'
+import { LongTxt } from "./LongTxt.jsx";
 
 export function BookDetails({ onClose }) {
 
@@ -34,7 +36,7 @@ export function BookDetails({ onClose }) {
       <img src={book.thumbnail} alt={book.title} />
       <h1>{book.title}</h1>
       <h5>{book.authors.join(", ")}</h5>
-      <p>{book.description}</p>
+      <LongTxt>{book.description}</LongTxt>
       <button onClick={() => (onClose ? onClose() : navigate("/"))}>Close</button>
     </div>
   );
