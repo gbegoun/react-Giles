@@ -30,14 +30,31 @@ export function BookDetails({ onClose }) {
     </div>
     )
 
+    const bookDetails = [
+      { label: "Author(s)", value: book.authors.join(", ") },
+      { label: "Published", value: book.publishedDate },
+      { label: "Pages", value: book.pageCount },
+      { label: "Categories", value: book.categories.join(", ") },
+      { label: "Language", value: book.language },
+      { label: "Price", value: book.listPrice.amount + " " + book.listPrice.currencyCode},
+    ];
   
   return (
     <div className={`book-details ${isModal ? "modal" : ""}`}>
       <img src={book.thumbnail} alt={book.title} />
-      <h1>{book.title}</h1>
-      <h5>{book.authors.join(", ")}</h5>
+      <h2>{book.title}</h2>
+      {book.listPrice.isOnSale ? <p className = "on-sale">On Sale!</p> : ""}
+      <h3>{book.subtitle}</h3>
+      <dl>
+        {bookDetails.map((detail, index) => (
+          <React.Fragment key={index}>
+            <dt>{detail.label}:</dt>
+            <dd>{detail.value}</dd>
+          </React.Fragment>
+        ))}
+      </dl>
       <LongTxt>{book.description}</LongTxt>
-      <button onClick={() => (onClose ? onClose() : navigate("/"))}>Close</button>
+      {isModal ? <button className = "close-button" onClick={() => (onClose ? onClose() : navigate("/book"))}>x</button> : ""}
     </div>
   );
 }

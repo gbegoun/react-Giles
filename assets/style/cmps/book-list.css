@@ -12,6 +12,6 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    background-color: var(--clr1bg);
+ 
     padding: 0.4rem;
 }
