@@ -1,0 +1,42 @@
+.book-preview {
+    text-align: center;
+    width: 175px;
+    height: 220px;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightgray;
+    
+}
+
+.book-preview h2 {
+    text-transform: capitalize;
+    white-space: nowrap;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 12pt;
+}
+
+.book-preview h4 {
+    text-transform: capitalize;
+    font-size: 9pt;
+    color: gray;
+}
+
+
+.book-preview img {
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.1);
+    max-width: 100px;
+}
+
+.book-preview:hover {
+    cursor: pointer;
+}
+
+.book-preview:hover img {
+    max-width: 105px; /* Increase by 5px */
+    transition: max-width 0.1s ease-in-out;
+}
+

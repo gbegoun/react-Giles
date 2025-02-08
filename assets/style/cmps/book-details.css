@@ -1,0 +1,46 @@
+.book-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: white;
+}
+
+.book-details h1 {
+    color: var(--clr1);
+    font-size: 2em;
+}
+
+.book-details h5 {
+    color: var(--clr2);
+}
+.book-details img {
+    max-width: 200px;
+    display: block;
+    margin: auto;
+}
+
+.book-details .blank{
+    width: 200px;
+    height:250px;
+    display: block;
+    margin: auto;
+    border: 1px solid black;
+}
+.book-details .loading {
+    font-size: 2.5rem;
+    animation: loader 0.5s alternate infinite linear;
+}
+
+.book-details.modal {
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    max-height: 80%;
+    max-width: 80%;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.3);
+}
+

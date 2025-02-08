@@ -1,0 +1,34 @@
+.app-header {
+    background-color: var(--clr1);
+    color: var(--clr1bg-light);
+    
+}
+
+
+.app-header section:first-child {
+    display: flex;
+    align-items: flex-end; /* Align items at the bottom */
+    position: relative;
+    justify-content: flex-start;
+}
+
+.app-header .logo{
+    height:100px;
+    margin-top:5px;
+    margin-right: 10px;
+}
+
+.app-header .app-nav {
+    display: flex;
+    gap: 15px;
+}
+
+.app-header .app-nav a {
+   cursor: pointer;
+}
+
+.app-header a.active {
+    color: var(--clr2bg);
+    font-weight: 600;
+    text-decoration: underline;
+}
