@@ -1,4 +1,5 @@
 import { BookPreview } from "./BookPreview.jsx";
+const { Link,useNavigate, useLocation } = ReactRouterDOM
 
 export function BookList({ books, onBookClick }) {
 
@@ -11,7 +12,14 @@ export function BookList({ books, onBookClick }) {
     return (
         <ul {...ulAttributes}>
             {books.map(book => (
-                <BookPreview key={book.id} book={book} onBookClick={onBookClick} />
+                <li key={book.id}>
+                <Link
+                    to={`/book/${book.id}`}
+                    state={{ modal: true }} // Indicate modal navigation
+                >
+                    <BookPreview book={book} />
+                </Link>
+            </li>
             ))}
         </ul>
     )

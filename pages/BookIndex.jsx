@@ -1,5 +1,5 @@
-const { useEffect, useState } = React
-const { Link,useNavigate, useLocation,Outlet  } = ReactRouterDOM
+const { useEffect, useState , } = React
+const { Link,useNavigate, useLocation, Outlet,useParams } = ReactRouterDOM
 
 import { BookFilter }   from '../cmps/BookFilter.jsx'
 import { BookList }     from '../cmps/BookList.jsx'
@@ -10,6 +10,7 @@ export function BookIndex() {
 
     const navigate = useNavigate();
     const location = useLocation();
+    const { bookId } = useParams();
 
     const [books, setBooks] = useState(null)
     const [filterBy, setFilterBy] = useState(bookService.getDefaultFilter())
@@ -38,6 +39,11 @@ export function BookIndex() {
     }
 
     if (!books) return <div className="loader">Loading...</div>
+
+    if (bookId && !isModal) {
+        return <Outlet />;
+    }
+
     return (
         <section className="book-index">
             <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
@@ -47,11 +53,11 @@ export function BookIndex() {
             {isModal && (
                 <div className="overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                        <BookDetails onClose={closeModal} />
+                        <Outlet />
+                        {/* <BookDetails onClose={closeModal} /> */}
                     </div>
                 </div>
             )}
-             <Outlet />
         </section>
     )
 
