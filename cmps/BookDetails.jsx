@@ -32,8 +32,13 @@ export function BookDetails({ onClose }) {
   const bookDetails = [
     { label: "Author(s)", value: book.authors.join(", ")},
 <<<<<<< HEAD
+<<<<<<< HEAD
     { label: "Published", value: book.publishedDate, comment:getAge(book.publishedDate) },
     { label: "Pages", value: book.pageCount, comment: getReadingLevel(book.pageCount) },
+=======
+    { label: "Published", value: book.publishedDate,status:getAge(book.publishedDate) },
+    { label: "Pages", value: book.pageCount, status: getReadingLevel(book.pageCount) },
+>>>>>>> 94787f6f657dab1531f9426c37529efb6542786b
 =======
     { label: "Published", value: book.publishedDate,status:getAge(book.publishedDate) },
     { label: "Pages", value: book.pageCount, status: getReadingLevel(book.pageCount) },
@@ -86,9 +91,13 @@ export function BookDetails({ onClose }) {
           <React.Fragment key={index} >
             <dt >{detail.label}:</dt>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <dd  className={detail.style && detail.style}>{detail.value}
               {detail.comment && <span className="comment"> {detail.comment}</span>} 
             </dd> 
+=======
+            <dd  className={detail.style && detail.style}>{detail.value}{detail.status && <span className="status"> {detail.status}</span>}</dd> 
+>>>>>>> 94787f6f657dab1531f9426c37529efb6542786b
 =======
             <dd  className={detail.style && detail.style}>{detail.value}{detail.status && <span className="status"> {detail.status}</span>}</dd> 
 >>>>>>> 94787f6f657dab1531f9426c37529efb6542786b

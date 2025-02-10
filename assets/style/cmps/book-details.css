@@ -47,6 +47,7 @@
     color: var(--clr2);
 }
 
+
 .book-details dl {
   display: grid;
   grid-template-columns: max-content auto;
