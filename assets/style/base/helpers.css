@@ -49,8 +49,14 @@
     animation: loader 0.5s alternate infinite linear;
 }
 
+.no-scroll {
+    overflow: hidden;
+}
+
 .overlay {
+    
     position: fixed;
+
     top: 0;
     left: 0;
     width: 100%;

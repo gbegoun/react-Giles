@@ -53,7 +53,6 @@ export function BookIndex() {
                 <div className="overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <Outlet />
-                        {/* <BookDetails onClose={closeModal} /> */}
                     </div>
                 </div>
             )}

@@ -12,7 +12,6 @@ export function BookDetails({ onClose }) {
   const isModal = location.state && location.state.modal;
 
   const [book, setBook] = useState(null);
-  console.log("123")
   useEffect(() => { 
       bookService.get(bookId)
         .then((bookData) => {
@@ -42,6 +41,10 @@ export function BookDetails({ onClose }) {
   return (
     <div className={`book-details ${isModal ? "modal" : ""}`}>
       <img src={book.thumbnail} alt={book.title} />
+      <div className="prev-next">
+        <button onClick={()=>navigate(`/book/${book.prevbookId}`, { state: { modal: isModal } })}>Prev</button>
+        <button onClick={()=>navigate(`/book/${book.nextbookId}`, { state: { modal: isModal } })}>Next</button>
+      </div>
       <h2>{book.title}</h2>
       {book.listPrice.isOnSale ? <p className = "on-sale">On Sale!</p> : ""}
       <h3>{book.subtitle}</h3>
