@@ -33,6 +33,8 @@ export function BookDetails({ onClose }) {
     { label: "Author(s)", value: book.authors.join(", ")},
     { label: "Published", value: book.publishedDate, comment:getAge(book.publishedDate) },
     { label: "Pages", value: book.pageCount, comment: getReadingLevel(book.pageCount) },
+    { label: "Published", value: book.publishedDate,status:getAge(book.publishedDate) },
+    { label: "Pages", value: book.pageCount, status: getReadingLevel(book.pageCount) },
     { label: "Categories", value: book.categories.join(", ") },
     { label: "Language", value: book.language },
     { label: "Price", value: book.listPrice.amount + " " + book.listPrice.currencyCode, style:getPriceStyle(book.listPrice.amount)},
