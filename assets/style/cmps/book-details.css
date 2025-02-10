@@ -47,6 +47,7 @@
     color: var(--clr2);
 }
 
+
 .book-details dl {
   display: grid;
   grid-template-columns: max-content auto;
@@ -102,14 +103,8 @@
     animation: loader 0.5s alternate infinite linear;
 }
 
-<<<<<<< HEAD
 .book-details .comment {
     color: #c9adad;
-=======
-.book-details .status {
-    color: #c9adad;
-    font-size: 14px;
->>>>>>> 94787f6f657dab1531f9426c37529efb6542786b
 }
 
 .book-details .red {
