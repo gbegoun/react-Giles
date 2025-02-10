@@ -29,15 +29,43 @@ export function BookDetails({ onClose }) {
     </div>
     )
 
-    const bookDetails = [
-      { label: "Author(s)", value: book.authors.join(", ") },
-      { label: "Published", value: book.publishedDate },
-      { label: "Pages", value: book.pageCount },
-      { label: "Categories", value: book.categories.join(", ") },
-      { label: "Language", value: book.language },
-      { label: "Price", value: book.listPrice.amount + " " + book.listPrice.currencyCode},
-    ];
-  
+  const bookDetails = [
+    { label: "Author(s)", value: book.authors.join(", ")},
+    { label: "Published", value: book.publishedDate,status:getAge(book.publishedDate) },
+    { label: "Pages", value: book.pageCount, status: getReadingLevel(book.pageCount) },
+    { label: "Categories", value: book.categories.join(", ") },
+    { label: "Language", value: book.language },
+    { label: "Price", value: book.listPrice.amount + " " + book.listPrice.currencyCode, style:getPriceStyle(book.listPrice.amount)},
+  ]
+
+  function getAge(year){
+    const age = Date.now()-year
+
+    if (age>10) return "Vintage"
+
+    if (age<1) return "new"
+
+    return ""
+
+  }
+
+  function getReadingLevel(pageCount)
+  {
+    if (pageCount>500) return "Serious Reading"
+    
+    if (pageCount  >200 ) return "Decent Reading"
+    
+    if(pageCount<100) return "Light Reading"
+    
+    return ""
+  }
+
+  function getPriceStyle(bookPrice)
+  {
+    if (bookPrice>150) return "red"
+    if (bookPrice<20) return "green"
+  }
+
   return (
     <div className={`book-details ${isModal ? "modal" : ""}`}>
       <img src={book.thumbnail} alt={book.title} />
@@ -50,9 +78,9 @@ export function BookDetails({ onClose }) {
       <h3>{book.subtitle}</h3>
       <dl>
         {bookDetails.map((detail, index) => (
-          <React.Fragment key={index}>
-            <dt>{detail.label}:</dt>
-            <dd>{detail.value}</dd>
+          <React.Fragment key={index} >
+            <dt >{detail.label}:</dt>
+            <dd  className={detail.style && detail.style}>{detail.value}{detail.status && <span className="status"> {detail.status}</span>}</dd> 
           </React.Fragment>
         ))}
       </dl>

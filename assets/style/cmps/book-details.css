@@ -46,6 +46,7 @@
 .book-details h5 {
     color: var(--clr2);
 }
+
 .book-details dl {
   display: grid;
   grid-template-columns: max-content auto;
@@ -101,3 +102,15 @@
     animation: loader 0.5s alternate infinite linear;
 }
 
+.book-details .status {
+    color: #c9adad;
+    font-size: 14px;
+}
+
+.book-details .red {
+    color: #a24141;
+}
+
+.book-details .green {
+    color: #7adc59;
+}
