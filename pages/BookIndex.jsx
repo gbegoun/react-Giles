@@ -20,6 +20,7 @@ export function BookIndex() {
         navigate(`/book`, { state: { modal: false }})
     };
 
+
     useEffect(() => {
         loadBooks()
     }, [filterBy])
@@ -33,10 +34,6 @@ export function BookIndex() {
             })
     }
 
-    function onSetFilter(filterBy) {
-        setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
-    }
-
     if (!books) return <div className="loader">Loading...</div>
 
     if (bookId && !isModal) {
@@ -45,9 +42,8 @@ export function BookIndex() {
 
     return (
         <section className="book-index">
-            <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
-            <BookList books={books}/>
-            {/* <Link to="/car/edit">Add Car</Link> */}
+            <BookFilter onSetFilter={setFilterBy} />
+            <BookList books={books} />
 
             {isModal && (
                 <div className="overlay" onClick={closeModal}>
