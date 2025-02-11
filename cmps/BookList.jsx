@@ -8,6 +8,7 @@ export function BookList({ books, onBookClick }) {
         className: 'book-list'
     }
 
+    if (!books) return <div className="loader">Loading...</div>
     
     return (
         <ul {...ulAttributes}>

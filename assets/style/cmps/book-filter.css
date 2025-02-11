@@ -6,10 +6,20 @@
 
 .book-filter form {
     display: grid;
-    grid-template-columns: 100px 200px;
-    gap: .3em;
+    grid-template-columns: repeat(auto-fit, minmax(150px, min-content));
+    gap: 0.5em 1em;
+}
+
+.book-filter .filter-field{
+    display:flex;
+    flex-direction: column;
+    gap:0.2em;
+    font-weight: bold;
 }
 
 .book-filter form button {
-    margin-inline: 0
+    display:block;
+    grid-column: 1/-1;
+    margin-inline: 0;
+    width:150px;
 }

@@ -20,7 +20,18 @@ export function BookIndex() {
         navigate(`/book`, { state: { modal: false }})
     };
 
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        const filterValues = {};
 
+
+        params.forEach((value,key) => {
+            filterValues[key] = params.get(key)
+        });
+
+        setFilterBy(filterValues)
+    }, [location.search]); 
+    
     useEffect(() => {
         loadBooks()
     }, [filterBy])
@@ -34,15 +45,13 @@ export function BookIndex() {
             })
     }
 
-    if (!books) return <div className="loader">Loading...</div>
-
-    if (bookId && !isModal) {
+    if (books && bookId && !isModal) {
         return <Outlet />;
     }
 
     return (
         <section className="book-index">
-            <BookFilter onSetFilter={setFilterBy} />
+            <BookFilter/>
             <BookList books={books} />
 
             {isModal && (

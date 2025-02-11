@@ -1,21 +1,23 @@
-import { bookService } from "../services/book.service.js"
-
+const { useNavigate, useLocation } = ReactRouterDOM
 const { useState, useEffect } = React
 
 
-export function BookFilter({ onSetFilter }) {
+export function BookFilter() {
 
     const [filterByToEdit, setFilterByToEdit] = useState({});
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const filters = [
         {label:"Title",type:"text", field:"title", id:"title"},
         {label:"Subtitle", type:"string",field:"subtitle", id:"subtitle"},
         {label:"Min Price", type:"number", field:"listPrice.amount", id:"minPrice"},
-        {label:"Max Price", type:"number", field:"listPrice.amount", id:"maxPrice"}
+        {label:"Max Price", type:"number", field:"listPrice.amount", id:"maxPrice"},
+        {label:"Publish Date From", type:"number", field:"publishedDate", id:"minPublishedDate"},
+        {label:"Publish Date To", type:"number", field:"publishedDate", id:"maxPublishedDate"},
     ]
 
     useEffect(()=>{
-        console.log("use effect")
         const hash = window.location.hash.split("?")[1];
         const params = new URLSearchParams(hash)
         const filterValues = {};
@@ -65,7 +67,7 @@ export function BookFilter({ onSetFilter }) {
         });
 
         window.history.pushState(null, "", `#/book?${params.toString()}`);
-        onSetFilter(filterByToEdit)
+        navigate(`/book?${params.toString()}`, {replace:true})
     }
 
 
@@ -79,7 +81,6 @@ export function BookFilter({ onSetFilter }) {
                         {getInputEl(filter)}
                     </div>
                 ))}
-
                 <button type="submit">Filter</button>
             </form>
         </section>
