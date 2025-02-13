@@ -2,7 +2,7 @@ const { useNavigate, useLocation } = ReactRouterDOM
 const { useState, useEffect } = React
 
 
-export function BookFilter() {
+export function BookFilter({setFilterBy}) {
 
     const [filterByToEdit, setFilterByToEdit] = useState({});
     const navigate = useNavigate();
@@ -60,14 +60,15 @@ export function BookFilter() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        const params = new URLSearchParams();
+        // const params = new URLSearchParams();
 
-        Object.entries(filterByToEdit).forEach(([key, value]) => {
-            if (value) params.append(key, value);
-        });
+        // Object.entries(filterByToEdit).forEach(([key, value]) => {
+        //     if (value) params.append(key, value);
+        // });
+        // window.history.pushState(null, "", `#/book?${params.toString()}`);
+        // navigate(`/book?${params.toString()}`, {replace:true})
 
-        window.history.pushState(null, "", `#/book?${params.toString()}`);
-        navigate(`/book?${params.toString()}`, {replace:true})
+        setFilterBy(filterByToEdit)
     }
 
 

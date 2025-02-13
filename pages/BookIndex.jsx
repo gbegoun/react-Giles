@@ -33,6 +33,14 @@ export function BookIndex() {
     }, [location.search]); 
     
     useEffect(() => {
+        const params = new URLSearchParams();
+
+        Object.entries(filterBy).forEach(([key, value]) => {
+            if (value) params.append(key, value);
+        });
+        window.history.pushState(null, "", `#/book?${params.toString()}`);
+        navigate(`/book?${params.toString()}`, {replace:true})
+
         loadBooks()
     }, [filterBy])
 
@@ -51,7 +59,7 @@ export function BookIndex() {
 
     return (
         <section className="book-index">
-            <BookFilter/>
+            <BookFilter setFilterBy={setFilterBy}/>
             <BookList books={books} />
 
             {isModal && (
