@@ -34,3 +34,15 @@ export function loadFromStorage(key) {
     const data = localStorage.getItem(key)
     return (data) ? JSON.parse(data) : undefined
 }
+
+export function debounce(func, delay=500) {
+    let timer;
+    return function(...args) {
+        return new Promise((resolve) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                resolve(func.apply(this, args));
+            }, delay);
+        });
+    };
+}

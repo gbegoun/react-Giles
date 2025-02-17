@@ -8,7 +8,7 @@ import { About }        from "./pages/About.jsx"
 import {BookIndex}      from "./pages/BookIndex.jsx"
 import { BookDetails }  from "./cmps/BookDetails.jsx"
 import { NotFound }     from "./cmps/NotFound.jsx"
-
+import { BookAdd }      from "./cmps/BookAdd.jsx"
 // import { Team } from "./cmps/AboutCmps/Team.jsx"
 // import { Vision } from "./cmps/AboutCmps/Vision.jsx"
 // import { CarEdit } from "./pages/CarEdit.jsx"
@@ -23,7 +23,7 @@ export function App() {
                 <AppHeader />
                 <main className="main-layout">
                     <Routes>
-                        <Route path="/" element={<Navigate to="/home" />} />
+                        <Route path="/" element={<Navigate to="/add" />} />
                         <Route path="/home" element={<Home />} />
                         <Route path="/about" element={<About />} />
                             {/* <Route path="/about/team" element={<Team />} /> */}
@@ -32,6 +32,7 @@ export function App() {
                         <Route path="/book" element={<BookIndex />}>
                             <Route path="/book/:bookId" element={<BookDetails />} />
                         </Route>
+                        <Route path="/add" element={<BookAdd />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>

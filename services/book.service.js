@@ -84,12 +84,16 @@ function _createBooks() {
     }
 }
 
-// function _createBook() {
-//     const book = {
-//         id: makeId   
-//         title:
-
-//     }
-    
-//     return null
-// }
+export async function addGoogleBook(filters)
+{
+    const api_key = "AIzaSyA4REMMGROHJ1jE2kdffCzdQ5BRcw6s2WA"
+    const url = `https://www.googleapis.com/books/v1/volumes?`
+    try {
+        const fullUrl = `${url}q=${filters.title}&filter=full&key=${api_key}`
+        const response = await fetch(fullUrl);
+        const data = await response.json();
+        return data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+}
