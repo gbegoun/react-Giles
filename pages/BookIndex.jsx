@@ -4,9 +4,11 @@ const { useNavigate, useLocation, Outlet, useParams } = ReactRouterDOM
 import { BookFilter }   from '../cmps/BookFilter.jsx'
 import { BookList }     from '../cmps/BookList.jsx'
 import { bookService }  from "../services/book.service.js"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 export function BookIndex() {
 
+    
     const navigate = useNavigate();
     const location = useLocation();
     const { bookId } = useParams();
@@ -24,12 +26,12 @@ export function BookIndex() {
         const params = new URLSearchParams(location.search);
         const filterValues = {};
 
-
         params.forEach((value,key) => {
             filterValues[key] = params.get(key)
         });
 
         setFilterBy(filterValues)
+
     }, [location.search]); 
     
     useEffect(() => {
@@ -42,8 +44,14 @@ export function BookIndex() {
         navigate(`/book?${params.toString()}`, {replace:true})
 
         loadBooks()
+        
     }, [filterBy])
 
+    function onSetFilterBy(newFilter) {
+        
+        setFilterBy(prevFilter => ({ ...prevFilter, ...newFilter }))
+    }
+    
     function loadBooks() {
         setBooks(null)
         bookService.query(filterBy)
@@ -59,7 +67,7 @@ export function BookIndex() {
 
     return (
         <section className="book-index">
-            <BookFilter setFilterBy={setFilterBy}/>
+            <BookFilter filterBy={filterBy} onSetFilterBy={onSetFilterBy}/>
             <BookList books={books} />
 
             {isModal && (

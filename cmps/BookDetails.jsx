@@ -1,9 +1,10 @@
-const {useNavigate, useLocation, useParams } = ReactRouterDOM
-const { useEffect, useState } = React
+const {useNavigate, useLocation, useParams,Outlet,Link } = ReactRouterDOM
+const { useEffect, useState,useCallback  } = React
 
-import { bookService } from '../services/book.service.js'
+import { addBookReview, bookService, removeBookReview } from '../services/book.service.js'
 import { LongTxt } from "./LongTxt.jsx";
-
+import { AddReview, remo} from "./AddReview.jsx"
+import { BookReviews } from './BookReviews.jsx';
 export function BookDetails({ onClose }) {
 
   const { bookId } = useParams(); 
@@ -12,6 +13,7 @@ export function BookDetails({ onClose }) {
   const isModal = location.state && location.state.modal;
 
   const [book, setBook] = useState(null);
+
   useEffect(() => { 
       bookService.get(bookId)
         .then((bookData) => {
@@ -20,7 +22,8 @@ export function BookDetails({ onClose }) {
         .catch((err) => {
           console.log(err)
         })
-  }, [book])
+        
+  }, [bookId])
 
   if (!book) return (
     <div className={`book-details ${isModal ? "modal" : ""}`}>
@@ -68,6 +71,25 @@ export function BookDetails({ onClose }) {
     if (bookPrice<20) return "green"
   }
 
+  function onAddReview(event)
+  {
+    event.preventDefault();
+    const formData = new FormData(event.target)
+    const data = Object.fromEntries([...formData.entries()])
+    if (data.date && data.name && data.rating)
+    {
+      addBookReview(bookId,data.date, data.name, data.rating)
+      .then(updatedbook => setBook(updatedbook))
+    }
+    
+  }
+
+  function onRemoveReview(reviewId)
+  {
+     removeBookReview(bookId, reviewId)   
+     .then(updatedbook => setBook(updatedbook))
+  }
+
   return (
     <div className={`book-details ${isModal ? "modal" : ""}`}>
       <img src={book.thumbnail} alt={book.title} />
@@ -89,6 +111,31 @@ export function BookDetails({ onClose }) {
         ))}
       </dl>
       <LongTxt>{book.description}</LongTxt>
+      <form  onSubmit={onAddReview}> 
+        <div>
+            <label htmlFor="name">Name</label>
+            <input type="text" name="name" id="name"></input>
+        </div>
+        <div>
+            <label htmlFor="date">Date</label>
+            <input type="date" name="date" id="date"></input>
+        </div>
+        <div>
+            <label htmlFor="rate">Rating 1-5</label>
+            <select name="rating" id="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+            {/* <button onClick="onCancel">Cancel</button> */}
+        </div>                    
+      </form>
+      <BookReviews bookReviews={book.reviews} onRemoveReview={onRemoveReview} onAddReview={onAddReview}/>
       {isModal ? <button className = "close-button" onClick={() => (onClose ? onClose() : navigate("/book"))}>x</button> : ""}
     </div>
   );

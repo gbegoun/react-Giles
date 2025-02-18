@@ -1,12 +1,11 @@
-const { useNavigate, useLocation } = ReactRouterDOM
-const { useState, useEffect } = React
 
+const { useState, useEffect,  useRef } = React
+import { debounce } from "../services/util.service.js"
 
-export function BookFilter({setFilterBy}) {
+export function BookFilter({filterBy, onSetFilterBy}) {
 
-    const [filterByToEdit, setFilterByToEdit] = useState({});
-    const navigate = useNavigate();
-    const location = useLocation();
+    const [filterByToEdit, setFilterByToEdit] = useState(filterBy);
+    const onSetFilterDebounce = useRef(debounce(onSetFilterBy, 300)).current
 
     const filters = [
         {label:"Title",type:"text", field:"title", id:"title"},
@@ -30,21 +29,25 @@ export function BookFilter({setFilterBy}) {
         setFilterByToEdit(filterValues)
     },[])
     
+    useEffect(() => {
+        onSetFilterDebounce(filterByToEdit)
+    }, [filterByToEdit])
 
     function handleChange({ target }) {
-        let { value, name: field } = target
+        let { value, name: field } = target;
         switch (target.type) {
-            case 'range':
-            case 'number':
-                value = +target.value
-                break
-            case 'checkbox':
-                value = target.checked
-                break
+            case "range":
+            case "number":
+                value = +target.value;
+                break;
+            case "checkbox":
+                value = target.checked;
+                break;
         }
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
-    }
 
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
+    }
+    
     function getInputEl(filter) {
         return (
             <input
@@ -60,13 +63,6 @@ export function BookFilter({setFilterBy}) {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // const params = new URLSearchParams();
-
-        // Object.entries(filterByToEdit).forEach(([key, value]) => {
-        //     if (value) params.append(key, value);
-        // });
-        // window.history.pushState(null, "", `#/book?${params.toString()}`);
-        // navigate(`/book?${params.toString()}`, {replace:true})
 
         setFilterBy(filterByToEdit)
     }

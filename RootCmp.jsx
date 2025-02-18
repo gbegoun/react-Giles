@@ -5,9 +5,11 @@ const { Routes, Route, Navigate } = ReactRouterDOM
 import { Home }         from "./pages/Home.jsx"
 import { AppHeader }    from "./cmps/AppHeader.jsx"
 import { About }        from "./pages/About.jsx"
-import {BookIndex}      from "./pages/BookIndex.jsx"
+import { BookIndex }    from "./pages/BookIndex.jsx"
 import { BookDetails }  from "./cmps/BookDetails.jsx"
 import { NotFound }     from "./cmps/NotFound.jsx"
+import { UserMsg }      from "./cmps/UserMsg.jsx"
+import { BookAdd } from "./cmps/BookAdd.jsx"
 
 // import { Team } from "./cmps/AboutCmps/Team.jsx"
 // import { Vision } from "./cmps/AboutCmps/Vision.jsx"
@@ -30,11 +32,13 @@ export function App() {
                             {/* <Route path="/about/vision" element={<Vision />} /> */}
                         {/* </Route> */}
                         <Route path="/book" element={<BookIndex />}>
-                            <Route path="/book/:bookId" element={<BookDetails />} />
+                            <Route path="/book/:bookId" element={<BookDetails />}/>
                         </Route>
+                        <Route path="/add" element={<BookAdd />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
+                <UserMsg />
             </section>
         </Router>
     )

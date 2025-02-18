@@ -12,10 +12,11 @@ export const bookService = {
     // save,
     // getEmptyCar,
     getDefaultFilter,
+    removeBookReview,
+    addBookReview
 }
 
 function query(filterBy = {}) {
-    console.log(filterBy)
     return storageService.query(STORAGE_KEY)
         .then(books => {
             if (filterBy.title){
@@ -41,6 +42,14 @@ function query(filterBy = {}) {
 function get(bookId) {
     return storageService.get(STORAGE_KEY, bookId)
         .then(_setNextPrevBookId)
+}
+
+function save(book) {
+    if (book.id) {
+        return storageService.put(STORAGE_KEY, book)
+    } else {
+        return storageService.post(STORAGE_KEY, book)
+    }
 }
 
 // function remove(carId) {
@@ -78,18 +87,52 @@ function _setNextPrevBookId(book) {
 
 function _createBooks() {
     let books = loadFromStorage(STORAGE_KEY)
-    if (!books || !books.books) {
+    if (!books || !books.length===0) {
         books = demo_books
+        console.log("loading demo books")
         saveToStorage(STORAGE_KEY,books)
     }
 }
 
-// function _createBook() {
-//     const book = {
-//         id: makeId   
-//         title:
+export function addBookReview(bookId,name,rating,date){
+    return get(bookId)
+            .then((book)=>{
+                if(!book.reviews) book.reviews=[]
+                book.reviews = [...book.reviews, {id:_makeId(), name,rating,date}]
+                return save(book).then(()=>book)})
+}
 
-//     }
-    
-//     return null
-// }
+export function removeBookReview(bookId, reviewId)
+{
+    return get(bookId)
+    .then((book)=>{
+        if (!book.reviews) return Promise.reject("No reviews found")
+        book.reviews = book.reviews.filter((review)=>review.id!=reviewId)
+        return save(book).then(()=>book)
+        })
+}
+
+function _makeId(length = 5) {
+    var text = ''
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (var i = 0; i < length; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+    return text
+}
+
+export async function addGoogleBook(filters)
+{
+    const api_key = "AIzaSyA4REMMGROHJ1jE2kdffCzdQ5BRcw6s2WA"
+    const url = `https://www.googleapis.com/books/v1/volumes?`
+    try {
+        const fullUrl = `${url}q=${filters.title}&filter=full&key=${api_key}`
+        const response = await fetch(fullUrl);
+        const data = await response.json();
+        console.debug(data)
+        return data
+        
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+}
